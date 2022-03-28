@@ -1,5 +1,5 @@
 const express = require('express')
-const port = 3010
+
 const nodemailer = require("nodemailer");
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -9,11 +9,16 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+const login = process.env.LOGIN
+const password = process.env.PASSWORD
+
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'sender.larionovra@gmail.com', // generated ethereal user
-        pass: 'SendEmailRoman391', // generated ethereal password
+        // user: 'sender.larionovra@gmail.com',
+        user: login,
+        // pass: 'SendEmailRoman391',
+        pass: password,
     }
 });
 
@@ -40,6 +45,9 @@ let {name, company, message} = req.body
 
 
 });
+
+const port = process.env.PORT || 3010;
+// const port = 3010
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
